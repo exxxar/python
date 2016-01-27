@@ -17,10 +17,7 @@ def format2(x):
 
 __author__ = "Aleks"
 __date__ = "$26.01.2016 17:59:14$"
-a = 0
 
-if __name__ == "__main__":
-    print "Hello World\n"
 dd = 0
 mm = 0
 yy = 0

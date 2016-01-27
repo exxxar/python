@@ -6,18 +6,17 @@
 __author__ = "Aleks"
 __date__ = "$26.01.2016 17:59:14$"
 
-i = 0
-j = 0
-mass = [];
-while i<9:
-    j = 0
-    while j<9:
-        if ((i+j)%7==0) and (i+j)>0:
-            mass.append(str(i)+str(j))
-        j=j+1
-    i=i+1
-
-
-print [str(k) for k in mass]
-
+li = [2,4,7,10,15,19,20,26]
+n = 1
+flag = 1
+while n < len(li):
+     for i in range(len(li)-n):
+          if li[i] > li[i+1]:
+               flag = 0
+     n += 1
+     
+if flag==0:
+    print "FALSE"
+else:
+    print "TRUE"
 
