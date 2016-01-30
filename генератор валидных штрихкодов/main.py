@@ -5,8 +5,9 @@
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+import os
 
-FONT_PATH = "c:\\1\\segoe.ttf"
+FONT_PATH = "segoe.ttf"
 group_A = {
     '0': '0001101',
     '1': '0011001',
@@ -73,10 +74,9 @@ def draw(code,path_f):
     step += 2
     draw.line((step, 0, step, 55), fill=(0, 0, 0))
     step += 1
-    for i in path:
-        print i    
-        if i == 'A':
-            print group_A[part_1[index]]
+    print comb+"["+part_1+"]["+part_2+"]["+path+"CCCCCC]"
+    for i in path:      
+        if i == 'A':            
             for k in group_A[part_1[index]]:
                 if (k == '1'):
                     draw.line((step, 0, step, 45), fill=(0, 0, 0))
@@ -84,7 +84,6 @@ def draw(code,path_f):
                     draw.line((step, 0, step, 45), fill=(255, 255, 255))
                 step += 1
         if i == 'B':
-            print group_B[part_1[index]]
             for k in group_B[part_1[index]]:
                 if (k == '1'):
                     draw.line((step, 0, step, 45), fill=(0, 0, 0))
@@ -101,8 +100,6 @@ def draw(code,path_f):
     
     index = 0
     while index < 6:
-        print "C"
-        print group_C[part_2[index]]
         for k in group_C[part_2[index]]:
             if (k == '1'):
                 draw.line((step, 0, step, 45), fill=(0, 0, 0))
@@ -118,7 +115,7 @@ def draw(code,path_f):
 
     font = ImageFont.truetype(FONT_PATH, 16)
     draw.text((3, 45), comb, (1, 1, 1), font=font)
-    draw.text((15, 45), part_1, (1, 1, 1), font=font)
+    draw.text((16, 45), part_1, (1, 1, 1), font=font)
     draw.text((63, 45), part_2, (1, 1, 1), font=font)
 
     image.save(path_f, "JPEG")
@@ -154,15 +151,60 @@ def checksum(x):
     sum_2 *=3
     sum_1 +=sum_2
     return recSearch(sum_1)-sum_1
+
+def format(x,n):
+    if (len(x)<int(n)):
+        x = "0"+x
+        x = format(x,n)
+    return x
+
+country = "460"#3    
     
-    
-country = "460"#3
+while True:
+     try:
+            country = raw_input("country_code[3]:")#"460"#3
+            if int(country)>0 and int(country)<=999:
+                country = format(country,3)
+                break
+            else:
+                print "Must be in range 001..999"
+     except ValueError:
+            print "Bad Number"            
+
 codeBusiness = "0045"#4
 
-index = 1
-N = 301
+while True:
+     try:
+            codeBusiness = raw_input("code business[4]:")#"0045"#4
+            if int(codeBusiness)>0 and int(codeBusiness)<=9999:
+                codeBusiness = format(codeBusiness,4)
+                break
+            else:
+                print "Must be in range 0001..9999"
+     except ValueError:
+            print "Bad Number"
 
-while index<N:
+N = 301
+while True:
+     try:
+            N = int(raw_input("count codes[0..99999]:")) 
+            if N>0 and N<=99999:
+                break
+            else:
+                print "Must be in range 0001..99999"
+     except ValueError:
+            print "Bad Number"
+
+if not os.path.isdir("codes"):
+    try:
+        os.makedirs('codes')
+    except OSError:
+        pass
+        print "Error creating direcory [codes]"
+index = 1
+
+
+while index<=N:
     codeProduct = recAdd(str(index))#5
-    draw(country+codeBusiness+codeProduct+str(checksum(country+codeBusiness+codeProduct)),"c:\\1\\codes\\"+str(index)+".jpg")
+    draw(country+codeBusiness+codeProduct+str(checksum(country+codeBusiness+codeProduct)),"codes\\"+str(index)+".jpg")
     index+=1
