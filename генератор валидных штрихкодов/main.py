@@ -6,8 +6,11 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 import os
+from docx import Document
+from docx.shared import Inches
 
-FONT_PATH = "segoe.ttf"
+
+FONT_PATH = "arialbd.ttf"
 group_A = {
     '0': '0001101',
     '1': '0011001',
@@ -59,7 +62,7 @@ combination = {
 
 
 def draw(code,path_f):
-    image = Image.new("RGB", (120, 63), (255, 255, 255))
+    image = Image.new("RGB", (int(220.9), 110), (255, 255, 255))
     draw = ImageDraw.Draw(image)  
     
     comb = code[0]
@@ -69,55 +72,76 @@ def draw(code,path_f):
     path = combination[comb]
     index = 0
     step = 10
-    step += 2
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))
-    step += 2
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))
-    step += 1
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0))
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0))
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
+    step += 4
     print comb+"["+part_1+"]["+part_2+"]["+path+"CCCCCC]"
     for i in path:      
         if i == 'A':            
             for k in group_A[part_1[index]]:
                 if (k == '1'):
-                    draw.line((step, 0, step, 45), fill=(0, 0, 0))
+                    draw.line((step, 0, step, 87), fill=(0, 0, 0))
+                    draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
                 if (k == '0'):
-                    draw.line((step, 0, step, 45), fill=(255, 255, 255))
-                step += 1
+                    draw.line((step, 0, step, 87), fill=(255, 255, 255))
+                    draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
+                step += 2
         if i == 'B':
             for k in group_B[part_1[index]]:
                 if (k == '1'):
-                    draw.line((step, 0, step, 45), fill=(0, 0, 0))
+                    draw.line((step, 0, step, 87), fill=(0, 0, 0))
+                    draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
                 if (k == '0'):
-                    draw.line((step, 0, step, 45), fill=(255, 255, 255))
-                step += 1
+                    draw.line((step, 0, step, 87), fill=(255, 255, 255))
+                    draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
+                step += 2
         index += 1
 
-    step += 1
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))
-    step += 2
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))  
-    step += 2
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0))
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0)) 
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
+    step += 4
     
     index = 0
     while index < 6:
         for k in group_C[part_2[index]]:
             if (k == '1'):
-                draw.line((step, 0, step, 45), fill=(0, 0, 0))
+                draw.line((step, 0, step, 87), fill=(0, 0, 0))
+                draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
             if (k == '0'):
-                draw.line((step, 0, step, 45), fill=(255, 255, 255))
-            step += 1
+                draw.line((step, 0, step, 87), fill=(255, 255, 255))
+                draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
+            step += 2
         index += 1
 
-    step += 1
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))
-    step += 2
-    draw.line((step, 0, step, 55), fill=(0, 0, 0))
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0))
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
+    step += 4
+    draw.line((step, 0, step, 93), fill=(0, 0, 0))
+    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
 
-    font = ImageFont.truetype(FONT_PATH, 16)
-    draw.text((3, 45), comb, (1, 1, 1), font=font)
-    draw.text((16, 45), part_1, (1, 1, 1), font=font)
-    draw.text((62, 45), part_2, (1, 1, 1), font=font)
-
+    font = ImageFont.truetype(FONT_PATH, 18)
+    draw.text((3, 88), comb, (1, 1, 1), font=font)
+    k = 25
+    for i in range(len(part_1)):
+         draw.text((k, 88), part_1[i:i+1:1], (1, 1, 1), font=font)
+         k+=14
+         
+    k = 120
+    for i in range(len(part_2)):
+         draw.text((k, 88), part_2[i:i+1:1], (1, 1, 1), font=font)
+         k+=14
+    percentage_ = 70
+    size_ = (image.size[0] * percentage_ / 100, image.size[1] * percentage_ / 100)
+    image=image.resize(size_, Image.ANTIALIAS)
     image.save(path_f, "JPEG")
     #image.show()   
     del draw
@@ -142,11 +166,11 @@ def checksum(x):
     sum_1 = 0
     sum_2 = 0
     while i<len(x):
-        sum_1+=int(x[i])
+        sum_2+=int(x[i])
         i+=2
     i=0
     while i<len(x)-1:
-        sum_2+=int(x[i])
+        sum_1+=int(x[i])
         i+=2
     sum_2 *=3
     sum_1 +=sum_2
@@ -203,8 +227,25 @@ if not os.path.isdir("codes"):
         print "Error creating direcory [codes]"
 index = 1
 
+COL_SIZE = 4
 
+document = Document()
+
+tbl = document.add_table(rows=1, cols=4)
+
+x = 0
 while index<=N:
     codeProduct = recAdd(str(index))#5
     draw(country+codeBusiness+codeProduct+str(checksum(country+codeBusiness+codeProduct)),"codes\\"+str(index)+".jpg")
+
+    if x%COL_SIZE==0:
+        row_cells = tbl.add_row().cells
+        x = 0
+
+    paragraph = row_cells[x].paragraphs[0]
+    run = paragraph.add_run()
+    run.add_picture("codes\\"+str(index)+".jpg",width=Inches(1.40))
     index+=1
+    x+=1    
+   
+document.save("demo.docx")
