@@ -11,6 +11,14 @@ from docx.shared import Inches
 
 
 FONT_PATH = "arialbd.ttf"
+LINE_WIDTH = 2
+WIDTH = 240
+HEIGHT = 110
+SIDE_LINE_WIDTH = 97
+MAIN_LINE_WIDTH = 87
+FONT_SIZE = 18
+
+
 group_A = {
     '0': '0001101',
     '1': '0011001',
@@ -21,7 +29,7 @@ group_A = {
     '6': '0101111',
     '7': '0111011',
     '8': '0110111',
-    '9': '0001011',
+    '9': '0001011'
     }
 group_B = {
     '0': '0100111',
@@ -33,7 +41,7 @@ group_B = {
     '6': '0000101',
     '7': '0010001',
     '8': '0001001',
-    '9': '0010011',
+    '9': '0010111'
     }
 group_C = {
     '0': '1110010',
@@ -45,7 +53,7 @@ group_C = {
     '6': '1010000',
     '7': '1000100',
     '8': '1001000',
-    '9': '1110100',
+    '9': '1110100'
     }
 combination = {
     '0':'AAAAAA',
@@ -62,7 +70,7 @@ combination = {
 
 
 def draw(code,path_f):
-    image = Image.new("RGB", (int(220.9), 110), (255, 255, 255))
+    image = Image.new("RGB", (WIDTH, HEIGHT), (255, 255, 255))
     draw = ImageDraw.Draw(image)  
     
     comb = code[0]
@@ -71,74 +79,60 @@ def draw(code,path_f):
 
     path = combination[comb]
     index = 0
-    step = 10
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0))
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0))
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-    step += 4
+    step = 22
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
+    step += 2*LINE_WIDTH
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
+    step += LINE_WIDTH
     print comb+"["+part_1+"]["+part_2+"]["+path+"CCCCCC]"
-    for i in path:      
-        if i == 'A':            
+    for i in path:
+
+        if i == 'A': 
             for k in group_A[part_1[index]]:
                 if (k == '1'):
-                    draw.line((step, 0, step, 87), fill=(0, 0, 0))
-                    draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
+                    draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
                 if (k == '0'):
-                    draw.line((step, 0, step, 87), fill=(255, 255, 255))
-                    draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
-                step += 2
+                    draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(255, 255, 255),width=LINE_WIDTH)
+                step += LINE_WIDTH            
         if i == 'B':
             for k in group_B[part_1[index]]:
                 if (k == '1'):
-                    draw.line((step, 0, step, 87), fill=(0, 0, 0))
-                    draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
+                    draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
                 if (k == '0'):
-                    draw.line((step, 0, step, 87), fill=(255, 255, 255))
-                    draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
-                step += 2
+                    draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(255, 255, 255),width=LINE_WIDTH)
+                step += LINE_WIDTH
         index += 1
-
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0))
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0)) 
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-    step += 4
+    step += LINE_WIDTH
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
+    step += 2*LINE_WIDTH
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH) 
+    step += 2*LINE_WIDTH
     
     index = 0
     while index < 6:
         for k in group_C[part_2[index]]:
             if (k == '1'):
-                draw.line((step, 0, step, 87), fill=(0, 0, 0))
-                draw.line((step+1, 0, step+1, 87), fill=(0, 0, 0))
+                draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
             if (k == '0'):
-                draw.line((step, 0, step, 87), fill=(255, 255, 255))
-                draw.line((step+1, 0, step+1, 87), fill=(255, 255, 255))
-            step += 2
+                draw.line((step, 0, step, MAIN_LINE_WIDTH), fill=(255, 255, 255),width=LINE_WIDTH)
+            step += LINE_WIDTH
         index += 1
+    #step += LINE_WIDTH
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
+    step += 2*LINE_WIDTH
+    draw.line((step, 0, step, SIDE_LINE_WIDTH), fill=(0, 0, 0),width=LINE_WIDTH)
 
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0))
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-    step += 4
-    draw.line((step, 0, step, 93), fill=(0, 0, 0))
-    draw.line((step+1, 0, step+1, 93), fill=(0, 0, 0))
-
-    font = ImageFont.truetype(FONT_PATH, 18)
-    draw.text((3, 88), comb, (1, 1, 1), font=font)
-    k = 25
+    font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
+    draw.text((6, MAIN_LINE_WIDTH+2), comb, (1, 1, 1), font=font)
+    k = 45
     for i in range(len(part_1)):
-         draw.text((k, 88), part_1[i:i+1:1], (1, 1, 1), font=font)
-         k+=14
+         draw.text((k, MAIN_LINE_WIDTH+2), part_1[i:i+1:1], (1, 1, 1), font=font)
+         k+=10
          
-    k = 120
+    k = 130
     for i in range(len(part_2)):
-         draw.text((k, 88), part_2[i:i+1:1], (1, 1, 1), font=font)
-         k+=14
+         draw.text((k, MAIN_LINE_WIDTH+2), part_2[i:i+1:1], (1, 1, 1), font=font)
+         k+=10
     percentage_ = 70
     size_ = (image.size[0] * percentage_ / 100, image.size[1] * percentage_ / 100)
     image=image.resize(size_, Image.ANTIALIAS)
@@ -162,15 +156,15 @@ def recAdd(x):
     return x        
         
 def checksum(x):
-    i = 1
+    i = 0
     sum_1 = 0
     sum_2 = 0
     while i<len(x):
-        sum_2+=int(x[i])
-        i+=2
-    i=0
-    while i<len(x)-1:
         sum_1+=int(x[i])
+        i+=2
+    i=1
+    while i<len(x):
+        sum_2+=int(x[i])
         i+=2
     sum_2 *=3
     sum_1 +=sum_2
@@ -249,3 +243,4 @@ while index<=N:
     x+=1    
    
 document.save("demo.docx")
+raw_input()
