@@ -1,0 +1,72 @@
+#!/usr/bin/python
+# coding=UTF-8
+import sys
+from PyQt4 import QtGui
+from PyQt4.QtGui import *
+
+CODE_TYPES = ['EAN-13','EAN-8','EAN-13+2','EAN-13+5','ISBN']
+class Example(QtGui.QWidget):
+    
+    def __init__(self):
+        super(Example, self).__init__()
+        
+        self.initUI()
+        
+    def initUI(self):
+        
+        codeS_title = QtGui.QLabel('Type')
+        title = QtGui.QLabel('Country')
+        author = QtGui.QLabel('ID')
+        review = QtGui.QLabel('Count')
+        price = QtGui.QLabel('Price')
+        
+        contryEdit = QtGui.QLineEdit()
+        idEdit = QtGui.QLineEdit()
+        #reviewEdit = QtGui.QTextEdit()
+        countEdit = QtGui.QLineEdit()
+        priceEdit = QtGui.QLineEdit()
+        
+        button = QtGui.QPushButton()
+        button.setText("GENERATE")
+        
+        listWidget = QComboBox()
+        listWidget.addItems(CODE_TYPES)
+            
+        grid = QtGui.QGridLayout()
+        grid.setSpacing(20)
+
+        grid.addWidget(codeS_title, 1, 0)
+        grid.addWidget(listWidget, 1, 1)
+        
+        grid.addWidget(title, 2, 0)
+        grid.addWidget(contryEdit, 2, 1)
+
+        grid.addWidget(author, 3, 0)
+        grid.addWidget(idEdit, 3, 1)
+
+        grid.addWidget(review, 4, 0)
+        grid.addWidget(countEdit, 4,1)
+
+        grid.addWidget(price, 5, 0)
+        grid.addWidget(priceEdit, 5,1)
+        
+        grid.addWidget(button, 6,1)
+        
+        self.setLayout(grid) 
+        
+        self.setGeometry(300, 300, 350, 100)
+        self.setWindowTitle('Review')    
+        self.show()
+    
+    def closeEvent(self,event):
+        print "exit!!"
+        
+def main():
+    
+    app = QtGui.QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main() 

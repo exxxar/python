@@ -8,11 +8,7 @@ from PIL import ImageFont
 import os
 from docx import Document
 from docx.shared import Inches
-import smtplib   
-from email.mime.text import MIMEText   
-from email.mime.multipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email import Encoders
+
 
 FONT_PATH = "arialbd.ttf"
 LINE_WIDTH = 2
@@ -126,94 +122,52 @@ class Generator(QtGui.QWidget):
         self.progress.setMaximum(0)
         self.progress.setMinimum(0)
         self.progress.setValue(0)
-
         
         listWidget = QComboBox()
-        listWidget.addItems(CODE_TYPES) 
-        
-        grid = QtGui.QGridLayout(self)
+        listWidget.addItems(CODE_TYPES)
+            
+        grid = QtGui.QGridLayout()
         grid.setSpacing(20)
-        
+
         grid.addWidget(self.image, 1, 1)
         
-        grid.addWidget(codeS_title, 2, 0)
-        grid.addWidget(listWidget, 2, 1)
+        #grid.addWidget(codeS_title, 1, 0)
+        #grid.addWidget(listWidget, 1, 1)
         
-        grid.addWidget(title, 3, 0)
-        grid.addWidget(self.contryEdit, 3, 1)
+        grid.addWidget(title, 2, 0)
+        grid.addWidget(self.contryEdit, 2, 1)
 
-        grid.addWidget(author, 4, 0)
-        grid.addWidget(self.idEdit, 4, 1)
+        grid.addWidget(author, 3, 0)
+        grid.addWidget(self.idEdit, 3, 1)
 
-        grid.addWidget(review, 5, 0)
-        grid.addWidget(self.countEdit, 5, 1)
+        grid.addWidget(review, 4, 0)
+        grid.addWidget(self.countEdit, 4, 1)
 
-        grid.addWidget(price, 6, 0)
-        grid.addWidget(self.priceEdit, 6, 1)
+        grid.addWidget(price, 5, 0)
+        grid.addWidget(self.priceEdit, 5, 1)
         
-        grid.addWidget(email, 7, 0)
-        grid.addWidget(self.emailEdit, 7, 1)
+        grid.addWidget(email, 6, 0)
+        grid.addWidget(self.emailEdit, 6, 1)
         
-        grid.addWidget(button, 8, 1)
+        grid.addWidget(button, 7, 1)
         
-        grid.addWidget(self.progress, 9, 1)
+        grid.addWidget(self.progress, 8, 1)
         
-        grid.addWidget(email, 10, 0)
-        grid.addWidget(self.log, 10, 1,5,1)
+        grid.addWidget(email, 9, 0)
+        grid.addWidget(self.log, 9, 1,5,1)
         
-        grid.addWidget(toHtml, 11, 0)
+        grid.addWidget(toHtml, 10, 0)
         
         self.setLayout(grid) 
-              
-        
         
         self.setGeometry(300, 300, 350, 100)
         self.setWindowTitle('BARCODE GENERATOR')    
         self.show()
-        
     def toHTML(self):  
         f = open("file_name.html" , "w")
         f.write(self.log.toHtml())
         f.close()
         os.startfile("file_name.html")
-        me = 'exxxar@gmail.com'
-        you = 'exxxar@gmail.com'
-       
-
-        text = '123123'
-
-        subj = '123132'
-
-
-        server = "smtp.gmail.com"
-        port = 25
-        user_name = "exxxar@gmail.com"
-        user_passwd = "93svxrpjkoronapr"
-
-        msg = MIMEMultipart('mixed')
-        msg['Subject'] = subj
-        msg['From'] = me
-        msg['To'] = you
-
-       # part1 = MIMEText('text', 'plain')
-       # part2 = MIMEText(open("demo.docx","r").read(), 'text/html;name="fdemo.docx"', 'utf-8')
-       # Compose attachment
-        basename = "barcode_scanner_icon.png"
-        part = MIMEBase('application', "octet-stream")
-        part.set_payload(open("barcode_scanner_icon.png","rb").read() )
-        Encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment; filename="%s"' % basename)
-        msg.attach(part)
-        #msg.attach(part2)
-
-
-        s = smtplib.SMTP(server, port)
-        s.ehlo()
-        s.starttls()
-        s.ehlo()
-        s.login(user_name, user_passwd)
-        s.sendmail(me, you, msg.as_string())
-        s.quit()
         
     def handleButton(self):        
         country = self.contryEdit.text()         
