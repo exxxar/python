@@ -6,6 +6,8 @@ import sys
 
 from WalletWindow import WalletPanel
 from ShopAdminWindow import ShopAdminPanel
+from SqlWindow import SqlPanel
+from ConfigWindow import ConfigPanel
 
 class AdminPanel(QtGui.QWidget):
 
@@ -24,11 +26,15 @@ class AdminPanel(QtGui.QWidget):
         self.sqlAdminBtn = QtGui.QPushButton()
         self.sqlAdminBtn.setText("SQL admin")
         self.sqlAdminBtn.clicked.connect(self.openSqlAdminWindow)
+        self.settingBtn = QtGui.QPushButton()
+        self.settingBtn.setText("Settings")
+        self.settingBtn.clicked.connect(self.openSettingsWindow)
         self.grid = QtGui.QGridLayout(self)
         self.grid.setSpacing(20)
         self.grid.addWidget(self.shopAdminBtn, 1, 0)
         self.grid.addWidget(self.walletAdminBtn, 2, 0)
         self.grid.addWidget(self.sqlAdminBtn, 3, 0)
+        self.grid.addWidget(self.settingBtn, 5, 0)
         self.setLayout(self.grid)
         self.setGeometry(500, 200, 200, 50)
         self.setWindowTitle('BIG STIRKA ADMIN PANEL')
@@ -47,9 +53,15 @@ class AdminPanel(QtGui.QWidget):
         self.setDisabled(True)
 
     def openSqlAdminWindow(self):
-        self.sqlAdminWindow = WalletPanel()
+        self.sqlAdminWindow = SqlPanel()
         self.sqlAdminWindow.setMainWindow(self)
         self.sqlAdminWindow.show()
+        self.setDisabled(True)
+
+    def openSettingsWindow(self):
+        self.settingsWindow = ConfigPanel()
+        self.settingsWindow.setMainWindow(self)
+        self.settingsWindow.show()
         self.setDisabled(True)
 
     def closeEvent(self, QCloseEvent):
